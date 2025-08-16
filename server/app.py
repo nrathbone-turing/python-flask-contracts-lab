@@ -22,5 +22,16 @@ def get_contract(contract_id):
             return make_response(contract["contract_information"], 200)
     return make_response("Contract not found", 404)
 
+@app.get("/customer/<customer_name>")
+def check_customer(customer_name):
+    """
+    204: Customer found — return no information
+    404: Customer not found
+    """
+    # generator function
+    if customer_name.lower() in (c.lower() for c in customers):
+        return make_response("", 204)  
+    return make_response("Customer not found", 404)
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
